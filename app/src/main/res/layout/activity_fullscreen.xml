@@ -55,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:format12Hour="yyyy/MM/dd"
+            android:format24Hour="yyyy/MM/dd(E)"
+            android:format12Hour="yyyy/MM/dd(E)"
             android:textColor="@color/white"
             android:textSize="60sp"
             android:timeZone="Asia/Tokyo" />
@@ -63,10 +64,11 @@
         <TextClock
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:format24Hour="HH:mm:ss"
             android:format12Hour="hh:mm:ss"
             android:textColor="@color/white"
             android:textSize="60sp"
-            android:timeZone="GMT+900" />
+            android:timeZone="Asia/Tokyo" />
 
     </LinearLayout>
 
