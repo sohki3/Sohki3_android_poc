@@ -1,14 +1,17 @@
 package com.example.sohki3_android_poc
 
-import androidx.appcompat.app.AppCompatActivity
+//import android.R
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -66,6 +69,20 @@ class FullscreenActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_fullscreen)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val imageView3: ImageView = findViewById(R.id.image_view_3)
+
+        val assets = resources.assets
+
+        // try-with-resources
+        try {
+            assets.open("pic/ino.jpg").use { istream ->
+                val bitmap = BitmapFactory.decodeStream(istream)
+                imageView3.setImageBitmap(bitmap)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         isFullscreen = true
 

@@ -2,4 +2,6 @@
     <string name="app_name">Sohki3_android_poc</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="img_description3">image3</string>
+    <string name="Sohki3Test">Sohki3 Test</string>
 </resources>

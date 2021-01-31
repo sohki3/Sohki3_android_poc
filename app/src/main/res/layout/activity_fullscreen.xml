@@ -11,6 +11,13 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
+    <ImageView
+        android:id="@+id/image_view_3"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/img_description3" />
+
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -29,7 +36,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sohki3 Test"
+        android:text="@string/Sohki3Test"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -40,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="bottom|center"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
