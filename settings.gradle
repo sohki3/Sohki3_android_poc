@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Sohki3_android_poc"
