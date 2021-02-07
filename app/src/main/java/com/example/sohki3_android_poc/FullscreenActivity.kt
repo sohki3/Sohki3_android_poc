@@ -2,15 +2,13 @@ package com.example.sohki3_android_poc
 
 //import android.R
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -68,9 +66,11 @@ class FullscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_fullscreen)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val imageView3: ImageView = findViewById(R.id.image_view_3)
+// 画像の直読み込みは廃止
+        val imageView3: ImageView = findViewById(R.id.imageView3)
 
         val assets = resources.assets
 
@@ -84,6 +84,17 @@ class FullscreenActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        var pictureButton : Button = findViewById(R.id.image_load_button)
+
+        //ボタンが押されたらギャラリーを開く
+        pictureButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/*"
+            }
+            startActivityForResult(intent, READ_REQUEST_CODE)
+        }
+
         isFullscreen = true
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -95,7 +106,29 @@ class FullscreenActivity : AppCompatActivity() {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+        findViewById<Button>(R.id.image_load_button).setOnTouchListener(delayHideTouchListener)
+    }
+
+    //写真が選択された後の動き
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (resultCode != RESULT_OK) {
+            return
+        }
+        when (requestCode) {
+            READ_REQUEST_CODE -> {
+                try {
+                    resultData?.data?.also { uri ->
+                        val inputStream = contentResolver?.openInputStream(uri)
+                        val image = BitmapFactory.decodeStream(inputStream)
+                        val imageView = findViewById<ImageView>(R.id.imageView3)
+                        imageView.setImageBitmap(image)
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -165,5 +198,10 @@ class FullscreenActivity : AppCompatActivity() {
          * and a change of the status and navigation bar.
          */
         private const val UI_ANIMATION_DELAY = 300
+
+        /**
+         * 画像読み込みのREAD_REQUEST_CODEの定義
+         */
+        private const val READ_REQUEST_CODE: Int = 42
     }
 }
